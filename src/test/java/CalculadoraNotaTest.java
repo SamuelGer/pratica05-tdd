@@ -57,6 +57,46 @@ public class CalculadoraNotaTest {
         String resultado = calc.situacao(70, 75);
         assertEquals("APROVADO", resultado);
     }
+    @Test
+    void devePermitirFazerAIPorA1MaisA3() {
+        CalculadoraNota calc = new CalculadoraNota();
+        // A1=10, A2=20, A3=30 (Nota final = 60), Frequência = 80
+        // A1 + A3 = 40 (atinge o limite mínimo)
+        boolean resultado = calc.podeFazerAI(10, 20, 30, 80);
+        assertTrue(resultado);
+    }
 
+    @Test
+    void devePermitirFazerAILimiteExato() {
+        CalculadoraNota calc = new CalculadoraNota();
+        // A1=10, A2=5, A3=30 (Nota final = 45), Frequência = 80
+        // A1 + A3 = 40 (exatamente no limite)
+        boolean resultado = calc.podeFazerAI(10, 5, 30, 80);
+        assertTrue(resultado);
+    }
+
+    @Test
+    void naoDevePermitirFazerAISeJaAprovado() {
+        CalculadoraNota calc = new CalculadoraNota();
+        // A1=25, A2=25, A3=30 (Nota final = 80 - já está aprovado)
+        boolean resultado = calc.podeFazerAI(25, 25, 30, 80);
+        assertFalse(resultado);
+    }
+
+    @Test
+    void naoDevePermitirFazerAIComFrequenciaBaixa() {
+        CalculadoraNota calc = new CalculadoraNota();
+        // Nota final < 70, mas frequência = 70 (abaixo de 75)
+        boolean resultado = calc.podeFazerAI(10, 20, 30, 70);
+        assertFalse(resultado);
+    }
+
+    @Test
+    void naoDevePermitirFazerAISeSomasInsuficientes() {
+        CalculadoraNota calc = new CalculadoraNota();
+        // A1+A3 = 35 e A2+A3 = 35 (abaixo de 40)
+        boolean resultado = calc.podeFazerAI(5, 5, 30, 80);
+        assertFalse(resultado);
+    }
 
 }
