@@ -41,14 +41,14 @@ public class CalculadoraNotaTest {
     void deveReprovarComNotaBaixa() {
         CalculadoraNota calc = new CalculadoraNota();
         String resultado = calc.situacao(60, 90);
-        assertEquals("REPROVADO", resultado);
+        assertEquals("REPROVADO POR NOTA", resultado);
     }
 
     @Test
     void deveReprovarPorFrequenciaMesmoComNotaAlta() {
         CalculadoraNota calc = new CalculadoraNota();
         String resultado = calc.situacao(95, 74);
-        assertEquals("REPROVADO", resultado);
+        assertEquals("REPROVADO POR FALTA", resultado);
     }
 
     @Test
